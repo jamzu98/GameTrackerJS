@@ -1,0 +1,255 @@
+/* Reset default styles */
+/* prettier-ignore */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/*  */
+/* Make sure that all elements with a class or ID have the styles reset */
+* {
+  box-sizing: border-box;
+  color: var(--clr-ff);
+}
+/* Remove the default list styles on ul and ol elements */
+ul,
+ol {
+  list-style: none;
+}
+/* Remove the default bottom margin on p elements */
+p {
+  margin-bottom: 0;
+}
+
+/* Variables */
+:root {
+  --ff-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --clr-main: #292c34;
+  --clr-accent: #16ab74;
+  --clr-ff: #fff;
+  --clr-ff-secondary: #000;
+}
+
+body {
+  background-color: var(--clr-main);
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  max-width: 1100px;
+  width: 50%;
+  padding: 10vh 10px;
+  text-align: center;
+}
+
+header {
+  width: 250px;
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+}
+
+.form--add {
+  display: flex;
+  align-items: center;
+  height: auto;
+  gap: 0.5rem;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+.list--container {
+  padding: 10px 0 25px 0;
+}
+
+.list--item--container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 1rem 0;
+  width: 250px;
+  height: auto;
+  padding-left: 5px;
+  border-left: solid 10px var(--clr-accent);
+}
+
+input,
+button {
+  color: var(--clr-ff-secondary);
+}
+
+.input--game {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid white;
+  outline: 0;
+  font-size: 1.3rem;
+  color: white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.input--game:focus {
+  color: var(--clr-accent);
+}
+
+.btn--remove,
+.btn--add,
+.btn--complete {
+  background: #ff4742;
+  border: 1px solid #ff4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito, roboto, proxima-nova, 'proxima nova', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.btn--add,
+.btn--complete {
+  background-color: var(--clr-accent);
+  border: 1px solid var(--clr-accent);
+}
+
+.btn--remove:hover,
+.btn--remove:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #ff4742;
+}
+
+.btn--complete {
+  margin-left: 1rem;
+}
+
+.btn--add:hover,
+.btn--add:active,
+.btn--complete:hover,
+.btn--complete:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: var(--clr-accent);
+}
+
+.btn--remove:active {
+  opacity: 0.5;
+}
+
+.btn--clear {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--clr-ff);
+  opacity: 50%;
+  transition: opacity 100ms;
+}
+
+.btn--clear:hover {
+  opacity: 100;
+}
+
+.btn--clear:active {
+  animation: pulse 0.5s linear;
+}
+
+.modal--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  bottom: 50%;
+  width: 500px;
+  height: 250px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 80vw;
+}
+
+.hidden {
+  display: none;
+}
+
+.msg {
+  margin-left: 1rem;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.border-animation {
+  border: 1px solid red;
+  animation: color-change 4s linear infinite;
+}
+
+@keyframes color-change {
+  0% {
+    border-color: red;
+  }
+  100% {
+    border-color: white;
+  }
+}
+
+span {
+  font-size: 1rem;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .form--add {
+    display: flex;
+    flex-direction: column;
+  }
+}

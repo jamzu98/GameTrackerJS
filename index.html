@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <button type="button" class="btn btn--clear">Clear</button>
+  <div id="app">
+    <header class="header--app">GAMES TRACKER</header>
+    <form class="form--add">
+      <label for="name">Name:</label><br>
+      <input class="input--game" type="text" id="name" name="name" placeholder="Add a game..." autocomplete="off"><br>
+      <button type="submit" class="btn btn--add">Add</button>
+    </form>
+
+    <div class="list--container">
+      <header class="header--list">PLAYING <span class="span--playing">hide</span></header>
+      <ul class="ul--games">
+      </ul>
+    </div>
+    <div class="list--container list--completed">
+      <header class="header--list">COMPLETED <span class="span--completed">hide</span></header>
+      <ul class="ul--completed">
+      </ul>
+    </div>
+  </div>
+
+  <div class="modal--error hidden">
+    <img class="spinner" src="./spinner.svg" alt="">
+    <div class="msg"></div>
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
