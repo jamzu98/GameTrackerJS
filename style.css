@@ -299,6 +299,10 @@ span {
   width: fit-content;
 }
 
+span.span--total {
+  cursor: unset;
+}
+
 div.modal--game > img {
   display: block;
   margin: auto;

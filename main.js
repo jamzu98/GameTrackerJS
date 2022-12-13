@@ -53,11 +53,12 @@ const calculateTotal = async function () {
       const data = await getJSON(
         `https://api.jamimakkonen.com/api/hltb/${x.name}`
       );
+      if (data[0] === undefined) return;
       const playtime = data[0].gameplayMain;
       total += playtime;
     })
   );
-  return total;
+  return getFromLocalStorage().length === 0 ? 0 : total;
 };
 
 const setTotal = async function () {
@@ -126,6 +127,7 @@ const clearList = function () {
   completedList.innerHTML = '';
   saveToLocalStorage([]);
   saveCompleted([]);
+  setTotal();
 };
 
 const createGameModal = function (game) {
