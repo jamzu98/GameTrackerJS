@@ -1,5 +1,4 @@
 'use strict';
-import './style.css';
 import spinner from './spinner.svg';
 
 const appMain = document.querySelector('#app');
