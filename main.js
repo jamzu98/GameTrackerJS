@@ -11,6 +11,7 @@ const errorModal = document.querySelector('.modal--error');
 const completedList = document.querySelector('.ul--completed');
 const playingToggle = document.querySelector('.span--playing');
 const completedToggle = document.querySelector('.span--completed');
+const spanTotal = document.querySelector('.span--total');
 const { localStorage } = window;
 
 const wait = function (time) {
@@ -20,7 +21,7 @@ const wait = function (time) {
 const getJSON = async function (url) {
   const response = await Promise.race([fetch(url), wait(6)]);
   const data = await response.json();
-  if (!data) return console.log('rats');
+  if (!data) return console.log('took too long');
   return data;
 };
 
@@ -40,6 +41,30 @@ const getFromLocalStorage = function () {
 const getCompleted = function () {
   const completed = localStorage.getItem('completed');
   return completed ? JSON.parse(completed) : [];
+};
+
+const calculateTotal = async function () {
+  if (getFromLocalStorage().length === 0) return 0;
+  let total = 0;
+  const gamesItem = localStorage.getItem('games');
+  const allGames = JSON.parse(gamesItem);
+
+  await Promise.all(
+    allGames.map(async (x) => {
+      const data = await getJSON(
+        `https://api.jamimakkonen.com/api/hltb/${x.name}`
+      );
+      const playtime = data[0].gameplayMain;
+      total += playtime;
+    })
+  );
+  return total;
+};
+
+const setTotal = async function () {
+  const total = await calculateTotal();
+  spanTotal.textContent =
+    total === 0 ? 'add games to calculate total' : `${total}h`;
 };
 
 const generateMarkup = function ({ id, name }, completed = false) {
@@ -87,6 +112,7 @@ const init = function init() {
   games.forEach((game) => addGame(game, gamesList));
   const completed = getCompleted();
   completed.forEach((game) => addGame(game, completedList, true));
+  setTotal();
 };
 
 init();
@@ -172,6 +198,7 @@ btnAdd.addEventListener('click', (e) => {
   addGame({ id, name }, gamesList);
   saveToLocalStorage(getFromLocalStorage().concat([{ id, name }]));
   clear();
+  setTotal();
 });
 
 gamesList.addEventListener('click', function (e) {
@@ -184,6 +211,7 @@ gamesList.addEventListener('click', function (e) {
 
   saveToLocalStorage(games);
   e.target.closest('.list--item--container').remove();
+  setTotal();
 });
 
 gamesList.addEventListener('click', function (e) {
@@ -208,6 +236,7 @@ gamesList.addEventListener('click', function (e) {
   );
   saveToLocalStorage(gamesnew);
   saveCompleted(getCompleted().concat([game]));
+  setTotal();
 });
 
 completedList.addEventListener('click', function (e) {
@@ -217,7 +246,6 @@ completedList.addEventListener('click', function (e) {
       .getAttribute('data-id');
     const games = getCompleted().filter((game) => game.id !== Number(id));
 
-    console.log(id);
     localStorage.removeItem(id);
 
     saveCompleted(games);
@@ -228,7 +256,6 @@ completedList.addEventListener('click', function (e) {
 const spans = [playingToggle, completedToggle];
 spans.forEach(function (element) {
   element.addEventListener('click', function (e) {
-    console.log(e);
     e.target.parentElement.parentElement
       .querySelector('ul')
       .classList.toggle('hidden');
