@@ -86,10 +86,21 @@ header {
   align-items: center;
   justify-content: space-between;
   margin: 0 0 1rem 0;
-  width: 250px;
+  width: 500px;
   height: auto;
   padding-left: 5px;
   border-left: solid 10px var(--clr-accent);
+}
+
+.list--item {
+  margin-left: 10px;
+  cursor: pointer;
+  transition: all 100ms;
+}
+
+.list--item:hover,
+.list--item:active {
+  transform: scale(1.25);
 }
 
 input,
@@ -171,7 +182,8 @@ button {
   opacity: 0.5;
 }
 
-.btn--clear {
+.btn--clear,
+.btn--close-modal {
   position: fixed;
   right: 10px;
   top: 10px;
@@ -185,11 +197,13 @@ button {
   transition: opacity 100ms;
 }
 
-.btn--clear:hover {
+.btn--clear:hover,
+.btn--close-modal:hover {
   opacity: 100;
 }
 
-.btn--clear:active {
+.btn--clear:active,
+.btn--close-modal:active {
   animation: pulse 0.5s linear;
 }
 
@@ -247,9 +261,74 @@ span {
   cursor: pointer;
 }
 
+.modal--game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  bottom: 50%;
+  width: 50vw;
+  height: 50vw;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  max-width: 80vw;
+  padding: 20px 20px;
+  overflow: hidden;
+}
+
+.modal--header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header--game {
+  width: fit-content;
+}
+
+div.modal--game > img {
+  display: block;
+  margin: auto;
+  width: 256px;
+  max-width: 100%;
+  height: auto;
+  border: solid 2px var(--clr-accent);
+  border-radius: 10%;
+}
+
+.time--container {
+  background-color: var(--clr-accent);
+  padding: 10px;
+}
+
 @media screen and (max-width: 800px) {
   .form--add {
     display: flex;
     flex-direction: column;
+  }
+  .list--item--container {
+    width: 80vw;
+  }
+  .modal--game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    width: 100vw;
+  }
+  .header--game {
+    margin-top: 1rem;
+  }
+  div.modal--game > img {
+    width: 20vh;
+    height: auto;
   }
 }

@@ -1,6 +1,8 @@
 'use strict';
 import './style.css';
+import spinner from './spinner.svg';
 
+const appMain = document.querySelector('#app');
 const textfield = document.querySelector('#name');
 const gamesList = document.querySelector('.ul--games');
 const btnAdd = document.querySelector('.btn--add');
@@ -13,6 +15,13 @@ const { localStorage } = window;
 
 const wait = function (time) {
   return new Promise((resolve) => setTimeout(resolve, time * 1000));
+};
+
+const getJSON = async function (url) {
+  const response = await Promise.race([fetch(url), wait(6)]);
+  const data = await response.json();
+  if (!data) return console.log('rats');
+  return data;
 };
 
 const saveToLocalStorage = function (items) {
@@ -94,6 +103,60 @@ const clearList = function () {
   saveCompleted([]);
 };
 
+const createGameModal = function (game) {
+  return `
+  <div class="modal--game">
+    <div class="modal--header">
+      <header class="header--game">${game.name}</header>
+      <button class="btn btn--close-modal">close</button>
+    </div>
+    <img src="${game.imageUrl}" alt="cover">
+    <div class="information--container">
+      <h3>Game Length</h3>
+      <div class="time--container">
+        Normal playthrough:${game.timeMain}h <br>
+        Normal + extra:${game.timePlus}h <br>
+        Completionist:${game.timeComplete}h <br>
+      </div>
+    </div>
+  </div>
+  `;
+};
+
+const openGameModal = async function (game) {
+  try {
+    const gameNameClean = game.trim();
+    const gameData = await getJSON(
+      `https://api.jamimakkonen.com/api/hltb/${gameNameClean}`
+    );
+    if (gameData.length === 0)
+      throw new Error('it brokey ;[ Try again with a different game');
+    const {
+      name,
+      imageUrl,
+      gameplayMain,
+      gameplayMainExtra,
+      gameplayCompletionist,
+    } = gameData[0];
+    const gameObj = {
+      name: name,
+      imageUrl: imageUrl,
+      timeMain: gameplayMain,
+      timePlus: gameplayMainExtra,
+      timeComplete: gameplayCompletionist,
+    };
+    appMain.insertAdjacentHTML('afterend', createGameModal(gameObj));
+    document
+      .querySelector('.btn--close-modal')
+      .addEventListener('click', function (e) {
+        e.target.parentElement.parentElement.remove();
+      });
+  } catch (err) {
+    console.error(err.message);
+    renderError(err.message);
+  }
+};
+
 btnClear.addEventListener('click', clearList);
 
 btnAdd.addEventListener('click', (e) => {
@@ -117,7 +180,6 @@ gamesList.addEventListener('click', function (e) {
   const id = e.target.closest('.list--item--container').getAttribute('data-id');
   const games = getFromLocalStorage().filter((game) => game.id !== Number(id));
 
-  console.log(id);
   localStorage.removeItem(id);
 
   saveToLocalStorage(games);
@@ -173,5 +235,15 @@ spans.forEach(function (element) {
     e.target.textContent === 'show'
       ? (e.target.textContent = 'hide')
       : (e.target.textContent = 'show');
+  });
+});
+
+const containers = [gamesList, completedList];
+
+containers.forEach(function (element) {
+  element.addEventListener('click', function (e) {
+    if (!e.target.classList.contains('list--item')) return;
+    const query = e.target.textContent;
+    openGameModal(query);
   });
 });
