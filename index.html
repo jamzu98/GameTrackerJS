@@ -13,7 +13,10 @@
 </head>
 
 <body>
-  <button type="button" class="btn btn--clear">Clear</button>
+  <div class="btn--container">
+    <button type="button" class="btn btn--export">Export</button>
+    <button type="button" class="btn btn--clear">Clear</button>
+  </div>
   <div id="app">
     <header class="header--app">GAMES TRACKER</header>
     <h3 class="h3--total">Total time to complete all games: <span class="span--total">0</h3>
@@ -38,6 +41,12 @@
   <div class="modal--error hidden">
     <img class="spinner" src="./spinner.svg" alt="">
     <div class="msg"></div>
+  </div>
+
+  <div class="modal--export hidden">
+    <button class="btn btn--close-export">close</button>
+    <img class="spinner spinner--modal" src="./spinner.svg" alt="">
+    <p class="p--export"></p>
   </div>
 
   <!-- <div class="modal--game">

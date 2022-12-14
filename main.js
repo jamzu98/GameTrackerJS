@@ -11,6 +11,10 @@ const completedList = document.querySelector('.ul--completed');
 const playingToggle = document.querySelector('.span--playing');
 const completedToggle = document.querySelector('.span--completed');
 const spanTotal = document.querySelector('.span--total');
+const btnExport = document.querySelector('.btn--export');
+const modalExport = document.querySelector('.modal--export');
+const textExport = document.querySelector('.p--export');
+const spinnerModal = document.querySelector('.spinner--modal');
 const { localStorage } = window;
 
 const wait = function (time) {
@@ -134,7 +138,9 @@ const createGameModal = function (game) {
   return `
   <div class="modal--game">
     <div class="modal--header">
-      <header class="header--game">${game.name}</header>
+      <header class="header--game ${
+        game.name.length > 22 ? 'smaller--text' : ''
+      }">${game.name}</header>
       <button class="btn btn--close-modal">close</button>
     </div>
     <img src="${game.imageUrl}" alt="cover">
@@ -183,6 +189,45 @@ const openGameModal = async function (game) {
     renderError(err.message);
   }
 };
+
+const exportData = async function () {
+  let data = [[], [], []];
+  getFromLocalStorage().forEach((x) => data[0].push(x.name));
+  getCompleted().forEach((x) => data[1].push(x.name));
+  const total = await calculateTotal();
+  data[2].push(total);
+  console.log(data);
+  return data;
+};
+
+const openExportModal = async function () {
+  spinnerModal.classList.remove('hidden');
+  modalExport.classList.remove('hidden');
+  const data = await exportData();
+  if (data[2][0] == 0 && data[1].length === 0) {
+    spinnerModal.classList.add('hidden');
+    return (textExport.textContent =
+      'Nothing to export, add games to your list');
+  }
+  if (data[0].length === 0 && data[1].length >= 1) {
+    spinnerModal.classList.add('hidden');
+    return (textExport.textContent = `Completed: ${data[1]}`);
+  }
+  textExport.textContent = `Playing: ${data[0]}, It would take: ${
+    data[2]
+  } hours to complete ${data[0].length === 1 ? 'it' : 'them all'}. ${
+    data[1].length === 0 ? '' : `Completed: ${data[1]}`
+  }`;
+  spinnerModal.classList.add('hidden');
+};
+
+modalExport.addEventListener('click', function (e) {
+  if (!e.target.classList.contains('btn--close-export')) return;
+  modalExport.classList.add('hidden');
+  textExport.textContent = ``;
+});
+
+btnExport.addEventListener('click', openExportModal);
 
 btnClear.addEventListener('click', clearList);
 

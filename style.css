@@ -188,8 +188,8 @@ button {
   opacity: 0.5;
 }
 
-.btn--clear,
-.btn--close-modal {
+.btn--close-modal,
+.btn--close-export {
   position: fixed;
   right: 10px;
   top: 10px;
@@ -203,17 +203,41 @@ button {
   transition: opacity 100ms;
 }
 
+.btn--container {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+}
+
+.btn--clear,
+.btn--export {
+  padding: 10px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--clr-ff);
+  opacity: 50%;
+  transition: opacity 100ms;
+}
+
 .btn--clear:hover,
-.btn--close-modal:hover {
+.btn--close-modal:hover,
+.btn--export:hover,
+.btn--close-export:hover {
   opacity: 100;
 }
 
 .btn--clear:active,
-.btn--close-modal:active {
+.btn--close-modal:active,
+.btn--export:active,
+.btn--close-export:active {
   animation: pulse 0.5s linear;
 }
 
-.modal--error {
+.modal--error,
+.modal--export {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,6 +252,13 @@ button {
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.6);
   max-width: 80vw;
+}
+
+.modal--export {
+  width: 60vw;
+  max-width: 1000px;
+  padding: 5rem;
+  background-color: #000;
 }
 
 .hidden {
@@ -284,6 +315,7 @@ span {
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
+  height: fit-content;
   max-width: 80vw;
   max-height: 1000px;
   padding: 20px 20px;
@@ -298,6 +330,7 @@ span {
 
 .header--game {
   width: fit-content;
+  font-size: 2rem;
 }
 
 span.span--total {
@@ -308,7 +341,7 @@ div.modal--game > img {
   display: block;
   margin: auto;
   width: 256px;
-  max-width: 100%;
+  /* max-width: 30vw; */
   height: auto;
   border: solid 2px var(--clr-accent);
   border-radius: 10%;
@@ -319,6 +352,10 @@ div.modal--game > img {
   padding: 10px;
 }
 
+.smaller--text {
+  font-size: 1rem;
+}
+
 @media screen and (max-width: 800px) {
   .form--add {
     display: flex;
@@ -326,6 +363,10 @@ div.modal--game > img {
   }
   .list--item--container {
     width: 80vw;
+  }
+  .list--item {
+    text-align: left;
+    max-width: 50vw;
   }
   .modal--game {
     display: flex;
@@ -337,6 +378,7 @@ div.modal--game > img {
   }
   .header--game {
     margin-top: 1rem;
+    font-size: 1rem;
   }
   div.modal--game > img {
     width: 20vh;
