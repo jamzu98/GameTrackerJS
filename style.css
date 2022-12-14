@@ -189,11 +189,22 @@ button {
   opacity: 0.5;
 }
 
-.btn--close-modal,
-.btn--close-export {
+.btn--close-modal {
   position: fixed;
   right: 10px;
   top: 10px;
+  padding: 10px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--clr-ff);
+  opacity: 50%;
+  transition: opacity 100ms;
+}
+
+.btn--close-export,
+.btn--copy-export {
   padding: 10px;
   font-size: 1.5rem;
   background: none;
@@ -226,14 +237,16 @@ button {
 .btn--clear:hover,
 .btn--close-modal:hover,
 .btn--export:hover,
-.btn--close-export:hover {
+.btn--close-export:hover,
+.btn--copy-export:hover {
   opacity: 100;
 }
 
 .btn--clear:active,
 .btn--close-modal:active,
 .btn--export:active,
-.btn--close-export:active {
+.btn--close-export:active,
+.btn--copy-export:active {
   animation: pulse 0.5s linear;
 }
 

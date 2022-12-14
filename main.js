@@ -15,6 +15,7 @@ const btnExport = document.querySelector('.btn--export');
 const modalExport = document.querySelector('.modal--export');
 const textExport = document.querySelector('.p--export');
 const spinnerModal = document.querySelector('.spinner--modal');
+const btnCopy = document.querySelector('.btn--copy-export');
 const { localStorage } = window;
 
 const wait = function (time) {
@@ -319,4 +320,10 @@ containers.forEach(function (element) {
     const query = e.target.textContent;
     openGameModal(query);
   });
+});
+
+btnCopy.addEventListener('click', function () {
+  const textCopy = textExport.textContent;
+  navigator.clipboard.writeText(textCopy);
+  alert('Text copied to clipboard');
 });
