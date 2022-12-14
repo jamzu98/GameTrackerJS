@@ -102,6 +102,7 @@ header {
   margin-left: 10px;
   cursor: pointer;
   transition: all 100ms;
+  padding-left: 10px;
 }
 
 .list--item:hover,
@@ -356,6 +357,11 @@ div.modal--game > img {
   font-size: 1rem;
 }
 
+.p--export {
+  width: 100%;
+  word-wrap: break-word;
+}
+
 @media screen and (max-width: 800px) {
   .form--add {
     display: flex;
@@ -366,7 +372,7 @@ div.modal--game > img {
   }
   .list--item {
     text-align: left;
-    max-width: 50vw;
+    max-width: 45vw;
   }
   .modal--game {
     display: flex;
@@ -383,5 +389,11 @@ div.modal--game > img {
   div.modal--game > img {
     width: 20vh;
     height: auto;
+  }
+  .modal--export {
+    width: 80vw;
+    height: 80vh;
+    /* overflow: auto; */
+    padding: 1rem;
   }
 }

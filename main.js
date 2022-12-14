@@ -147,9 +147,9 @@ const createGameModal = function (game) {
     <div class="information--container">
       <h3>Game Length</h3>
       <div class="time--container">
-        Normal playthrough:${game.timeMain}h <br>
-        Normal + extra:${game.timePlus}h <br>
-        Completionist:${game.timeComplete}h <br>
+        Normal playthrough: ${game.timeMain}h <br>
+        Normal + extra: ${game.timePlus}h <br>
+        Completionist: ${game.timeComplete}h <br>
       </div>
     </div>
   </div>
@@ -235,7 +235,7 @@ btnAdd.addEventListener('click', (e) => {
   e.preventDefault();
 
   const name = textfield.value;
-  if (!name) {
+  if (!name || !/^[a-zA-Z0-9 :]+$/.test(name)) {
     renderError('Please enter a valid game name');
     return;
   }
